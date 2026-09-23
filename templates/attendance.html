@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Attendance</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <h2>Payroll</h2>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('employees') }}">Employees</a>
+        <a href="{{ url_for('attendance') }}">Attendance</a>
+        <a href="{{ url_for('payslip') }}">Individual Payslip</a>
+        <a href="{{ url_for('all_payslips') }}">All Payslips</a>
+        <a href="{{ url_for('search') }}">Search Employee</a>
+        <a href="{{ url_for('present_absent') }}">Present / Absent</a>
+        <a href="{{ url_for('overtime') }}">Overtime</a>
+        <a href="{{ url_for('monthly_summary') }}">Monthly Summary</a>
+
+        <a class="logout"
+           href="{{ url_for('logout') }}">Logout</a>
+
+    </aside>
+
+    <main class="content">
+
+        <h1>Attendance</h1>
+
+        <div class="form-card">
+
+            <h2>Record Attendance</h2>
+
+            <form method="POST">
+
+                <select name="employee_id" required>
+
+                    <option value="">
+                        Select Employee
+                    </option>
+
+                    {% for employee in employees %}
+
+                    <option value="{{ employee.employee_id }}">
+                        {{ employee.employee_id }} -
+                        {{ employee.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <input type="date"
+                       name="day"
+                       required>
+
+                <input type="time"
+                       name="attendance_time">
+
+                <input type="number"
+                       name="hours"
+                       step="0.01"
+                       min="0"
+                       placeholder="Hours Worked"
+                       required>
+
+                <button type="submit">
+                    Save Attendance
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="table-card">
+
+            <h2>Attendance Records</h2>
+
+            <table>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Hours</th>
+                </tr>
+
+                {% for record in attendance %}
+
+                <tr>
+
+                    <td>{{ record.employee_id }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.day }}</td>
+                    <td>{{ record.attendance_time }}</td>
+                    <td>{{ record.hours }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,543 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #222;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: #172033;
+    color: white;
+    padding: 25px 15px;
+    position: fixed;
+    height: 100vh;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 13px 15px;
+    margin-bottom: 5px;
+    border-radius: 7px;
+}
+
+.sidebar a:hover {
+    background: #2d3b55;
+}
+
+.sidebar .logout {
+    margin-top: 30px;
+    background: #b42318;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 35px;
+    width: calc(100% - 240px);
+}
+
+.content h1 {
+    margin-bottom: 25px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.form-card,
+.table-card,
+.payslip {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.form-card h2,
+.table-card h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #172033;
+    color: white;
+}
+
+tr:hover {
+    background: #f7f7f7;
+}
+
+.delete-btn {
+    color: white;
+    background: #dc2626;
+    padding: 7px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.alert {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+.alert.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.alert.danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.payslip {
+    max-width: 700px;
+}
+
+.payslip p {
+    padding: 8px 0;
+}
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #172033;
+}
+
+.login-box {
+    width: 400px;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-box input {
+    width: 100%;
+}
+
+.login-box button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .two-columns {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .content {
+        margin-left: 180px;
+        width: calc(100% - 180px);
+        padding: 20px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+}
+.month-heading {
+    background: white;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.month-heading h2 {
+    margin: 0;
+}
+
+.print-btn {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background: #1d4ed8;
+}
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .sidebar,
+    .form-card,
+    .print-btn {
+        display: none !important;
+    }
+
+    .content {
+        margin: 0;
+        width: 100%;
+        padding: 0;
+    }
+
+    .payslip {
+        display: block;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+
+    .payslip h2 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .payslip p {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+
+    .total-pay {
+        font-size: 18px !important;
+        font-weight: bold;
+    }
+}
+
+/* ================================
+   EMPLOYEE TABLE
+================================ */
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.employee-table th {
+    background: #6f42c1;
+    color: white;
+    padding: 12px;
+    text-align: center;
+}
+
+.employee-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.employee-table tr:hover {
+    background: #f8f5ff;
+}
+
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 3px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+
+/* EDIT BUTTON */
+
+.btn-primary {
+    background-color: #7b5fc4;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #6247a5;
+}
+
+
+/* ACTIVATE BUTTON */
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+
+/* DEACTIVATE BUTTON */
+
+.btn-warning {
+    background-color: #e0a800;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #c69500;
+}
+
+
+/* ================================
+   STATUS
+================================ */
+
+.status-active {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status-inactive {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* ================================
+   EDIT EMPLOYEE FORM
+================================ */
+
+.edit-container {
+    width: 500px;
+    max-width: 90%;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+}
+
+.edit-container h2 {
+    text-align: center;
+    color: #6f42c1;
+    margin-bottom: 25px;
+}
+
+.edit-container label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.edit-container input,
+.edit-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.edit-container input:focus,
+.edit-container select:focus {
+    border-color: #7b5fc4;
+    outline: none;
+}
+
+
+/* SAVE BUTTON */
+
+.edit-container button {
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #7b5fc4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-container button:hover {
+    background-color: #6247a5;
+}
+
+
+/* CANCEL BUTTON */
+
+.cancel-btn {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 10px 18px;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.cancel-btn:hover {
+    background-color: #545b62;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 700px) {
+
+    .employee-table {
+        font-size: 13px;
+    }
+
+    .employee-table th,
+    .employee-table td {
+        padding: 8px;
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        margin: 4px 0;
+    }
+
+    .edit-container {
+        width: 90%;
+        padding: 20px;
+    }
+}

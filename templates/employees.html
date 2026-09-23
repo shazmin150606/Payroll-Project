@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Employees</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <h2>Payroll</h2>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('employees') }}">Employees</a>
+        <a href="{{ url_for('attendance') }}">Attendance</a>
+        <a href="{{ url_for('payslip') }}">Individual Payslip</a>
+        <a href="{{ url_for('all_payslips') }}">All Payslips</a>
+        <a href="{{ url_for('search') }}">Search Employee</a>
+        <a href="{{ url_for('present_absent') }}">Present / Absent</a>
+        <a href="{{ url_for('overtime') }}">Overtime</a>
+        <a href="{{ url_for('monthly_summary') }}">Monthly Summary</a>
+
+        <a class="logout"
+           href="{{ url_for('logout') }}">Logout</a>
+
+    </aside>
+
+    <main class="content">
+
+        <h1>Employees</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <div class="form-card">
+
+            <h2>Add Employee</h2>
+
+            <form method="POST">
+
+                <input type="text"
+                       name="employee_id"
+                       placeholder="Employee ID"
+                       required>
+
+                <input type="text"
+                       name="name"
+                       placeholder="Employee Name"
+                       required>
+
+                <input type="number"
+                       name="rate"
+                       placeholder="Hourly Rate"
+                       step="0.01"
+                       required>
+
+                <select name="employee_type" required>
+
+                    <option value="">
+                        Select Type
+                    </option>
+
+                    <option value="full">
+                        Full Time
+                    </option>
+
+                    <option value="part">
+                        Part Time
+                    </option>
+
+                </select>
+
+                <button type="submit">
+                    Add Employee
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="table-card">
+
+            <h2>Employee List</h2>
+
+            <table class="employee-table">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Rate</th>
+                    <th>Type</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for employee in employees %}
+
+                <tr>
+
+                    <td>{{ employee.employee_id }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>₹{{ employee.rate }}</td>
+                    <td>{{ employee.employee_type }}</td>
+
+                    <td>
+    <a href="{{ url_for('edit_employee', employee_id=employee.employee_id) }}"
+       class="btn btn-primary">
+        Edit
+    </a>
+
+    {% if employee.status == 'Active' %}
+
+        <a href="{{ url_for('deactivate_employee', employee_id=employee.employee_id) }}"
+           class="btn btn-warning"
+           onclick="return confirm('Deactivate this employee?')">
+            Deactivate
+        </a>
+
+    {% else %}
+
+        <a href="{{ url_for('activate_employee', employee_id=employee.employee_id) }}"
+           class="btn btn-success"
+           onclick="return confirm('Activate this employee?')">
+            Activate
+        </a>
+
+    {% endif %}
+</td>
+<td>
+    {% if employee.status == 'Active' %}
+        <span>Active</span>
+    {% else %}
+        <span>Inactive</span>
+    {% endif %}
+</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

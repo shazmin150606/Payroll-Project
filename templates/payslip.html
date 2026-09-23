@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Individual Payslip</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <h2>Payroll</h2>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('employees') }}">
+            Employees
+        </a>
+
+        <a href="{{ url_for('attendance') }}">
+            Attendance
+        </a>
+
+        <a href="{{ url_for('payslip') }}">
+            Individual Payslip
+        </a>
+
+        <a href="{{ url_for('all_payslips') }}">
+            Monthly Payslips
+        </a>
+
+        <a href="{{ url_for('search') }}">
+            Search Employee
+        </a>
+
+        <a href="{{ url_for('present_absent') }}">
+            Present / Absent
+        </a>
+
+        <a href="{{ url_for('overtime') }}">
+            Overtime
+        </a>
+
+        <a href="{{ url_for('monthly_summary') }}">
+            Monthly Summary
+        </a>
+
+        <a class="logout"
+           href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="content">
+
+        <h1>Individual Payslip</h1>
+
+
+        <!-- SELECT EMPLOYEE AND MONTH -->
+
+        <div class="form-card">
+
+            <h2>Select Employee and Month</h2>
+
+            <form method="POST">
+
+                <label>
+                    Employee
+                </label>
+
+                <select name="employee_id" required>
+
+                    <option value="">
+                        Select Employee
+                    </option>
+
+                    {% for employee in employees %}
+
+                    <option value="{{ employee.employee_id }}">
+
+                        {{ employee.employee_id }}
+                        -
+                        {{ employee.name }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <label>
+                    Payroll Month
+                </label>
+
+                <input
+                    type="month"
+                    name="month"
+                    value="{{ month }}"
+                    required
+                >
+
+
+                <button type="submit">
+                    Show Payslip
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- PAYSLIP -->
+
+        {% if payslip %}
+
+        <div class="payslip">
+
+            <h2>Employee Payslip</h2>
+
+
+            <p>
+                <strong>Employee ID:</strong>
+
+                {{ payslip.employee_id }}
+            </p>
+
+
+            <p>
+                <strong>Name:</strong>
+
+                {{ payslip.name }}
+            </p>
+
+
+            <p>
+                <strong>Employee Type:</strong>
+
+                {{ payslip.employee_type }}
+            </p>
+
+
+            <p>
+                <strong>Hourly Rate:</strong>
+
+                ₹{{ "%.2f"|format(payslip.rate) }}
+            </p>
+
+
+            <p>
+                <strong>Payroll Month:</strong>
+
+                {{ payslip.month }}
+            </p>
+
+
+            <hr>
+
+
+            <h3>Working Hours</h3>
+
+
+            <p>
+                <strong>Regular Hours:</strong>
+
+                {{ "%.2f"|format(payslip.regular_hours) }}
+            </p>
+
+
+            <p>
+                <strong>Overtime Hours:</strong>
+
+                {{ "%.2f"|format(payslip.overtime_hours) }}
+            </p>
+
+
+            <hr>
+
+
+            <h3>Payment Details</h3>
+
+
+            <p>
+                <strong>Regular Pay:</strong>
+
+                ₹{{ "%.2f"|format(payslip.regular_pay) }}
+            </p>
+
+
+            <p>
+                <strong>Overtime Pay:</strong>
+
+                ₹{{ "%.2f"|format(payslip.overtime_pay) }}
+            </p>
+
+
+            <p>
+                <strong>Bonus:</strong>
+
+                ₹{{ "%.2f"|format(payslip.bonus) }}
+            </p>
+
+
+            <hr>
+
+
+            <p class="total-pay">
+
+                <strong>Total Pay:</strong>
+
+                ₹{{
+                    "%.2f"|format(
+                        payslip.regular_pay
+                        + payslip.overtime_pay
+                        + payslip.bonus
+                    )
+                }}
+
+            </p>
+
+        <button type="button"
+                class="print-btn"
+                onclick="window.print()">
+            Print Payslip
+        </button>
+
+        </div>
+
+        {% endif %}
+
+
+    </main>
+
+</div>
+
+</body>
+</html>

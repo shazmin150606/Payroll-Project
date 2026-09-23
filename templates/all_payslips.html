@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Monthly Payslips</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <h2>Payroll</h2>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+        <a href="{{ url_for('employees') }}">
+            Employees
+        </a>
+
+        <a href="{{ url_for('attendance') }}">
+            Attendance
+        </a>
+
+        <a href="{{ url_for('payslip') }}">
+            Individual Payslip
+        </a>
+
+        <a href="{{ url_for('all_payslips') }}">
+            Monthly Payslips
+        </a>
+
+        <a href="{{ url_for('search') }}">
+            Search Employee
+        </a>
+
+        <a href="{{ url_for('present_absent') }}">
+            Present / Absent
+        </a>
+
+        <a href="{{ url_for('overtime') }}">
+            Overtime
+        </a>
+
+        <a href="{{ url_for('monthly_summary') }}">
+            Monthly Summary
+        </a>
+
+        <a class="logout"
+           href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </aside>
+
+
+    <main class="content">
+
+        <h1>Monthly Payslips</h1>
+
+
+        <!-- Month Selection -->
+
+        <div class="form-card">
+
+            <h2>Select Payroll Month</h2>
+
+            <form method="POST">
+
+                <label>
+                    Select Month:
+                </label>
+
+                <input
+                    type="month"
+                    name="month"
+                    value="{{ month }}"
+                    required
+                >
+
+                <button type="submit">
+                    View Payslips
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Selected Month -->
+
+        <div class="month-heading">
+
+            <h2>
+                Payslips for {{ month }}
+            </h2>
+
+        </div>
+
+
+        <!-- Payslip Table -->
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Employee ID</th>
+
+                        <th>Employee Name</th>
+
+                        <th>Regular Hours</th>
+
+                        <th>Overtime Hours</th>
+
+                        <th>Regular Pay</th>
+
+                        <th>Overtime Pay</th>
+
+                        <th>Bonus</th>
+
+                        <th>Total Pay</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for employee, pay in payslips %}
+
+                    <tr>
+
+                        <td>
+                            {{ pay.employee_id }}
+                        </td>
+
+                        <td>
+                            {{ pay.name }}
+                        </td>
+
+                        <td>
+                            {{ "%.2f"|format(pay.regular_hours) }}
+                        </td>
+
+                        <td>
+                            {{ "%.2f"|format(pay.overtime_hours) }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(pay.regular_pay) }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(pay.overtime_pay) }}
+                        </td>
+
+                        <td>
+                            ₹{{ "%.2f"|format(pay.bonus) }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                ₹{{
+                                    "%.2f"|format(
+                                        pay.regular_pay
+                                        + pay.overtime_pay
+                                        + pay.bonus
+                                    )
+                                }}
+                            </strong>
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="8"
+                            style="text-align:center;">
+
+                            No employees found.
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

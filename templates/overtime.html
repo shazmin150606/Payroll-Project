@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Overtime</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <h2>Payroll</h2>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('employees') }}">Employees</a>
+        <a href="{{ url_for('attendance') }}">Attendance</a>
+        <a href="{{ url_for('payslip') }}">Individual Payslip</a>
+        <a href="{{ url_for('all_payslips') }}">All Payslips</a>
+        <a href="{{ url_for('search') }}">Search Employee</a>
+        <a href="{{ url_for('present_absent') }}">Present / Absent</a>
+        <a href="{{ url_for('overtime') }}">Overtime</a>
+        <a href="{{ url_for('monthly_summary') }}">Monthly Summary</a>
+
+        <a class="logout"
+           href="{{ url_for('logout') }}">Logout</a>
+
+    </aside>
+
+    <main class="content">
+
+        <h1>Overtime Records</h1>
+
+        <div class="table-card">
+
+            <table>
+
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Total Hours</th>
+                    <th>Overtime Hours</th>
+                </tr>
+
+                {% for record in overtime %}
+
+                <tr>
+
+                    <td>{{ record.employee_id }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.day }}</td>
+                    <td>{{ record.hours }}</td>
+                    <td>{{ record.overtime_hours }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

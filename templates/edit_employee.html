@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Edit Employee</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <h2>Edit Employee</h2>
+
+    <form method="POST">
+
+        <label>Employee ID</label>
+        <input type="text"
+               value="{{ employee.employee_id }}"
+               disabled>
+
+        <label>Name</label>
+        <input type="text"
+               name="name"
+               value="{{ employee.name }}"
+               required>
+
+        <label>Rate</label>
+        <input type="number"
+               name="rate"
+               value="{{ employee.rate }}"
+               required>
+
+        <label>Employee Type</label>
+
+        <select name="employee_type" required>
+
+            <option value="Full Time"
+                {% if employee.employee_type == "Full Time" %}selected{% endif %}>
+                Full Time
+            </option>
+
+            <option value="Part Time"
+                {% if employee.employee_type == "Part Time" %}selected{% endif %}>
+                Part Time
+            </option>
+
+        </select>
+
+        <button type="submit">
+            Save Changes
+        </button>
+
+        <a href="{{ url_for('employees') }}">
+            Cancel
+        </a>
+
+    </form>
+
+</body>
+</html>

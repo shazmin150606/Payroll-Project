@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Present / Absent</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <h2>Payroll</h2>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('employees') }}">Employees</a>
+        <a href="{{ url_for('attendance') }}">Attendance</a>
+        <a href="{{ url_for('payslip') }}">Individual Payslip</a>
+        <a href="{{ url_for('all_payslips') }}">All Payslips</a>
+        <a href="{{ url_for('search') }}">Search Employee</a>
+        <a href="{{ url_for('present_absent') }}">Present / Absent</a>
+        <a href="{{ url_for('overtime') }}">Overtime</a>
+        <a href="{{ url_for('monthly_summary') }}">Monthly Summary</a>
+
+        <a class="logout"
+           href="{{ url_for('logout') }}">Logout</a>
+
+    </aside>
+
+    <main class="content">
+
+        <h1>Present / Absent</h1>
+
+        <div class="two-columns">
+
+            <div class="table-card">
+
+                <h2>Present Today</h2>
+
+                <table>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+
+                    {% for employee in present %}
+
+                    <tr>
+                        <td>{{ employee.employee_id }}</td>
+                        <td>{{ employee.name }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+            <div class="table-card">
+
+                <h2>Absent Today</h2>
+
+                <table>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+
+                    {% for employee in absent %}
+
+                    <tr>
+                        <td>{{ employee.employee_id }}</td>
+                        <td>{{ employee.name }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

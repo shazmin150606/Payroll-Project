@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <h2>Payroll</h2>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('employees') }}">Employees</a>
+        <a href="{{ url_for('attendance') }}">Attendance</a>
+        <a href="{{ url_for('payslip') }}">Individual Payslip</a>
+        <a href="{{ url_for('all_payslips') }}">All Payslips</a>
+        <a href="{{ url_for('search') }}">Search Employee</a>
+        <a href="{{ url_for('present_absent') }}">Present / Absent</a>
+        <a href="{{ url_for('overtime') }}">Overtime</a>
+        <a href="{{ url_for('monthly_summary') }}">Monthly Summary</a>
+
+        <a class="logout"
+           href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </aside>
+
+    <main class="content">
+
+        <h1>Dashboard</h1>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Employees</h3>
+                <p>{{ total_employees }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Today's Attendance</h3>
+                <p>{{ today_attendance }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Overtime Records</h3>
+                <p>{{ overtime_count }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Payroll Records</h3>
+                <p>{{ payroll_count }}</p>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
