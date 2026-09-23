@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import mysql.connector
 from functools import wraps
@@ -9,12 +11,18 @@ app.secret_key = "payroll_system_secret_key"
 
 payroll = Payroll()
 
-DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "Jazz@123",
-    "database": "payroll_db"
-}
+def get_connection():
+    try:
+        return mysql.connector.connect(
+            host=os.getenv("DB_HOST"),
+            port=int(os.getenv("DB_PORT")),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME")
+        )
+    except (mysql.connector.Error, ValueError, TypeError) as e:
+        print("Database connection error:", e)
+        raise
 
 USERNAME = "admin"
 PASSWORD = "admin123"
