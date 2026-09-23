@@ -1,15 +1,24 @@
 import os
-
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import mysql.connector
 from functools import wraps
 from datetime import datetime
 from payroll import Payroll, PayrollError
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = "payroll_system_secret_key"
 
 payroll = Payroll()
+
+DB_CONFIG = {
+    "host": os.getenv("DB_HOST"),
+    "port": int(os.getenv("DB_PORT", "3306")),
+    "user": os.getenv("DB_USER"),
+    "password": os.getenv("DB_PASSWORD"),
+    "database": os.getenv("DB_NAME"),
+}
 
 def get_connection():
     try:
