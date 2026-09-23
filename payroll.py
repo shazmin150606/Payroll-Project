@@ -5,17 +5,18 @@ from functools import wraps
 from datetime import datetime
 
 
-DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "Jazz@123",
-    "database": "payroll_db"
-}
-
-
 def get_connection():
-    return mysql.connector.connect(**DB_CONFIG)
-
+    try:
+        return mysql.connector.connect(
+            host=os.getenv("DB_HOST"),
+            port=int(os.getenv("DB_PORT")),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME")
+        )
+    except (mysql.connector.Error, ValueError, TypeError) as e:
+        print("Database connection error:", e)
+        raise
 
 class PayrollError(Exception):
     pass
