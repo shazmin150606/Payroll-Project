@@ -463,7 +463,7 @@ def all_payslips():
     if not month:
         month = datetime.now().strftime("%Y-%m")
 
-        payslips = payroll.payslips(month)
+    payslips = payroll.payslips(month)
 
     return render_template(
         "all_payslips.html",
