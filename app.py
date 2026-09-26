@@ -458,12 +458,17 @@ def payslip():
 @login_required
 def all_payslips():
 
-    month = request.form.get("month") if request.method == "POST" else request.args.get("month")
+    month = datetime.now().strftime("%Y-%m")
+    payslips = []
 
-    if not month:
-        month = datetime.now().strftime("%Y-%m")
+    if request.method == "POST":
 
-    payslips = payroll.payslips(month)
+        month = request.form.get("month")
+
+        if not month:
+            month = datetime.now().strftime("%Y-%m")
+
+        payslips = payroll.payslips(month)
 
     return render_template(
         "all_payslips.html",
