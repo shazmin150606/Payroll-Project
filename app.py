@@ -1,4 +1,5 @@
 import os
+import pstats
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import mysql.connector
@@ -322,7 +323,7 @@ def attendance():
 
             employee = cursor.fetchone()
 
-            if not employee or employee[0] != "Active":
+            if not employee or employee["status"] != "Active":
 
                 flash(
                     "Attendance cannot be marked for an inactive employee.",
@@ -333,7 +334,7 @@ def attendance():
 
                 cursor.execute("""
                     INSERT INTO attendance
-                    (employee_id, day, attendance_time, hours)
+                    (employee_id, date, attendance_time, hours)
                     VALUES (%s, %s, %s, %s)
                 """, (
                     employee_id,
@@ -356,13 +357,13 @@ def attendance():
             a.id,
             a.employee_id,
             e.name,
-            a.day,
+            a.date AS day,
             a.attendance_time,
             a.hours
         FROM attendance a
         JOIN employees e
         ON a.employee_id = e.employee_id
-        ORDER BY a.day DESC
+        ORDER BY a.date DESC
     """)
 
     attendance_list = cursor.fetchall()
@@ -384,7 +385,6 @@ def attendance():
         attendance=attendance_list,
         employees=employee_list
     )
-
 
 # --------------------------------------------------
 # INDIVIDUAL PAYSLIP
@@ -533,7 +533,7 @@ def present_absent():
         FROM employees e
         INNER JOIN attendance a
         ON e.employee_id = a.employee_id
-        WHERE a.day = CURDATE()
+        WHERE a.date = CURDATE()
     """)
 
     present = cursor.fetchall()
@@ -612,7 +612,7 @@ def monthly_summary():
 
     cursor.execute("""
         SELECT
-            DATE_FORMAT(a.day, '%Y-%m') AS month,
+            DATE_FORMAT(a.date, '%Y-%m') AS month,
             COUNT(DISTINCT a.employee_id) AS employees,
             SUM(a.hours) AS total_hours,
             SUM(
@@ -623,7 +623,7 @@ def monthly_summary():
                 END
             ) AS overtime_hours
         FROM attendance a
-        GROUP BY DATE_FORMAT(a.day, '%Y-%m')
+        GROUP BY DATE_FORMAT(a.date, '%Y-%m')
         ORDER BY month DESC
     """)
 
